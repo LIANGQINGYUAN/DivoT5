@@ -30,7 +30,7 @@ modifying the old code to meet this requirement may involve changes in multiple 
 ## Datasets & Models
 ### Datasets & Fine-tuned Models
 
-You can download the fine-tuned weights from [this link]().
+You can download the datasets and models with fine-tuned weights from [this link](https://zenodo.org/records/11520642).
 
 
 ### An example of inference on the CodeReview dataset
