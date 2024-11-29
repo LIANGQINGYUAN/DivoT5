@@ -1,0 +1,1 @@
+You can run the `GOGOGO.py` for the pretraining process.

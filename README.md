@@ -1,3 +1,7 @@
+# 📢 News
+
+- We open-source all data processing and training code for DivoT5.
+
 
 # DivoT5
 We propose a directional diffusion technique at the data level of code evolution and apply it within an Encoder-Decoder framework.
@@ -25,6 +29,10 @@ In Figure 1, $X_{T+1}$ to $X_{T}$ represents the process of removing artificial 
 As shown in the code evolution example in Figure 2, 
 modifying the old code to meet this requirement may involve changes in multiple locations, which could be far apart. Completing this evolution requires incremental modifications to all relevant locations.
 
+# Open Source Code
+💡 We open-source all data processing and training code for DivoT5.
+
+You can preprocess the pretraining data in the `data_preprocess` folder, find the code for pretraining DivoT5 in the `pretraining` folder, locate the code for fine-tuning DivoT5 in the `finetuning` folder, and explore usage examples for DivoT5 in the `inference` folder.
 
 
 ## Datasets & Models
