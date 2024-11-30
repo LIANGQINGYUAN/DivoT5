@@ -10,7 +10,7 @@ python c1_get_diff.py
 - output: diff_java_diffusion
 
 ```
-python c2_diffusion_with_mask.py
+python c2_diffusion.py
 ```
 
 3. The length filter
