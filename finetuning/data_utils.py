@@ -17,8 +17,68 @@ def read_examples(data_dir, split_tag, data_num, world_size, local_rank, is_spli
         examples = read_CodeRefinement_examples(data_dir, split_tag, data_num, world_size, local_rank, is_split)
     elif 'CUAAAI21' in data_dir:
         examples = read_cuaaai21(data_dir, split_tag, data_num, world_size, local_rank, is_split)
+    elif 'trans' in data_dir:
+        examples = read_trans(data_dir, split_tag)
+    elif 'concode' in data_dir:
+        examples = read_concode_examples(data_dir, split_tag)
     else:
         examples = read_buggy_fixed(data_dir, split_tag, data_num, world_size, local_rank, is_split)
+    return examples
+
+def read_concode_examples(data_dir, split_tag):
+    examples = []
+    filename = data_dir
+    if split_tag == 'train':
+        filename = os.path.join(data_dir, f"train_o.json")
+    elif split_tag == 'test':
+        filename = os.path.join(data_dir, f"test_o.json")
+    else:
+        filename = os.path.join(data_dir, f"dev_o.json")
+    with open(filename) as f:
+        for idx, line in enumerate(f):
+            x = json.loads(line)
+            if 'nl' in x:
+                examples.append(Example( idx=idx, source=x["nl"].strip(), target=x["code"].strip()))
+            else:
+                examples.append(Example( idx=idx, source=x["input"].strip(), target=x["output"].strip()))
+            idx += 1
+    return examples
+
+def read_trans(data_dir, split_tag):
+    # dataDir = f'../{DTAG}/code-trans-data/;c2j'
+    filename = data_dir
+    file_path = data_dir.split(';')[0]
+    if 'c2j' in filename:
+        if 'train' in split_tag:
+            src_file = file_path+'train.java-cs.txt.cs'
+            tgt_file = file_path+'train.java-cs.txt.java'
+        elif 'test' in split_tag:
+            src_file = file_path+'test.java-cs.txt.cs'
+            tgt_file = file_path+'test.java-cs.txt.java'
+        else:
+            src_file = file_path+'valid.java-cs.txt.cs'
+            tgt_file = file_path+'valid.java-cs.txt.java'
+    else:
+        if 'train' in split_tag:
+            src_file = file_path+'train.java-cs.txt.java'
+            tgt_file = file_path+'train.java-cs.txt.cs'
+        elif 'test' in split_tag:
+            src_file = file_path+'test.java-cs.txt.java'
+            tgt_file = file_path+'test.java-cs.txt.cs'
+        else:
+            src_file = file_path+'valid.java-cs.txt.java'
+            tgt_file = file_path+'valid.java-cs.txt.cs'
+    examples=[]
+    srcs = open(src_file).readlines()
+    tgts = open(tgt_file).readlines()
+    for idx, s, t in zip(range(len(srcs)), srcs, tgts):
+        examples.append(
+                Example(
+                        idx = idx,
+                        source=" ".join(s.split()),
+                        target = " ".join(t.split()),
+                        ) 
+            )
     return examples
 
 def read_cuaaai21(data_dir, split_tag, data_num, world_size, local_rank, is_split):
@@ -68,7 +128,6 @@ def read_buggy_fixed(data_dir, split_tag, data_num, world_size, local_rank, is_s
                         ) 
             )
     return examples
-    return examples
 
 def read_comment_update_examples_v2(data_dir, split_tag, data_num, world_size, local_rank, is_split=False):
     examples = []
@@ -110,8 +169,8 @@ def read_refinement_examples(data_dir, split_tag, data_num, world_size, local_ra
         examples.append(
                 Example(
                         idx = idx,
-                        source=" ".join(s.split()),
-                        target = " ".join(t.split()),
+                        source=s,
+                        target = t,
                         ) 
             )
     return examples
