@@ -95,3 +95,31 @@ public  virtual  bool   canEncode   ( )   { return true  ;  }
 ```
 
 
+# Algorithm of Constructing Code Changes
+
+
+We use the following notations and algorithm to provide a more detailed and clear explanation of how our diffusion strategy constructs the data for each step.
+
+Let \( O_1 \) represent the initial old code and \( C_1 \) represent the final new code. We first compute \( \text{diff}(O_1, C_1) \), which represents all the changes required to transform the old code \( O_1 \) into the new code \( C_1 \). Specifically, the sequence of changes is determined using the **`unified_diff`** format provided by Python's **`difflib`** library, which generates a line-by-line comparison of two text versions. The **`unified_diff`** format, which is similar to the diff format used by GitHub, groups nearby modified lines into a "hunk". Each diffusion step builds on the previous step by changing an additional hunk.
+
+We decompose \( \text{diff}(O_1, C_1) \) into \( n \) independent code change steps:
+\[
+\text{diff}(O_1, C_1) = \{ \Delta_1, \Delta_2, \dots, \Delta_n \},
+\]
+
+Each \( \Delta_i \) represents a part of the code change needed to transform \( O_1 \) into \( C_1 \). We then apply these changes sequentially to \( O_1 \), generating a series of intermediate code states with noise \( IC_{11}, IC_{12}, \dots, IC_{1n} \):
+\[
+IC_{11} = O_1 + \Delta_1
+\]
+\[
+IC_{12} = IC_{11} + \Delta_2
+\]
+\[
+\vdots
+\]
+\[
+C_1 = IC_{1(n-1)} + \Delta_n
+\]
+
+Through this process, we generate multiple intermediate versions of the code as it progresses from old to new. Each intermediate version \( IC_{1i} \) represents the code state after a partial denoise (i.e., a diffusion step).
+
