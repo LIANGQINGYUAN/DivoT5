@@ -1,3 +1,5 @@
+# Experimental Records
+
 The experimental setting and summary for NL-based Code Refinement dataset.
 
 Setting:
@@ -54,3 +56,41 @@ Summary:
 [best-bleu] bleu-4: 78.64, em: 29.44, codebleu: 80.56
 Finish and take 44h52m
 ```
+
+# Java and CSharp Examples
+**example 1:**
+
+java 
+```java
+public static  String   stripExtension   ( String   filename    )   { int   idx   = filename   . indexOf   ( '.'  )       ;  if ( idx   !=  -  1      )   { filename   =  filename   . substring   ( 0  , idx  )      ;  }    return filename  ;  }
+```
+
+csharp
+```csharp
+public  static  string   StripExtension   ( string   filename    )   { int   idx  = filename   . IndexOf     ( '.'   )       ;  if ( idx   !=  - 1      ) { filename   =  filename   . Substring     ( 0   , idx   )      ;  }    return filename  ;  }
+```
+
+**example 2:**
+
+java
+```java
+public  java  . nio   . ByteBuffer    encode   ( string   s    )   { return encode   ( java   . nio     . CharBuffer     . wrap     ( java   . lang     . CharSequenceProxy     . Wrap     ( s   )     )     )    ;  }   
+```
+
+csharp
+```csharp
+public final  ByteBuffer   encode   ( String   s    )   { return encode   ( CharBuffer   . wrap   ( s  )    )    ;  }   
+```
+
+**example 3:**
+java
+```java
+public  boolean   canEncode   ( )   { return true ;  }
+```
+
+csharp
+```csharp
+public  virtual  bool   canEncode   ( )   { return true  ;  }   
+```
+
+
