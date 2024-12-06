@@ -83,6 +83,7 @@ public final  ByteBuffer   encode   ( String   s    )   { return encode   ( Char
 ```
 
 **example 3:**
+
 java
 ```java
 public  boolean   canEncode   ( )   { return true ;  }
