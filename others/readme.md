@@ -1,3 +1,15 @@
+# Ablation Experiments
+| **Models** | **CodeReview EM** | **BugFix-Small EM** | **BugFix-Medium EM** | **NL-CodeRefinement EM** | **Refine-Small EM** | **Refine-Medium EM** | **Java-CShapr EM** | **CSharp-Java EM** |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| DivoT5-small~(60M) | **40.16** | **35.84** | **28.72** | **29.42** | **22.31** | **14.62** | **68.30** | **72.50** |
+| w/o KSM | 35.45 | 35.28 | 27.36 | 28.69 | 21.75 | 13.67 | 68.00 | 71.20 |
+| w/o RM | 37.02 | 35.30 | 28.10 | 28.61 | 21.54 | 13.91 | 66.30 | 69.80 |
+| w/o EDAE | 35.22 | 35.50 | 27.65 | 28.74 | 20.99 | 13.86 | 67.50 | 68.60 |
+| w/o EDR | 37.31 | 34.76 | 28.37 | 28.72 | 21.68 | 14.03 | 67.70 | 70.20 |
+| w/o Artificial Noise |  36.61|  35.52|  28.40|  28.85|  21.41|  13.80|  67.00|  68.60|
+| w/o ALL | 34.75 | 35.35 | 27.36 | 28.50 | 20.84 | 13.41 | 67.60 | 68.20 |
+
+
 # Experimental Records
 
 The experimental setting and summary for NL-based Code Refinement dataset.
@@ -36,7 +48,7 @@ Setting:
  'tokenizer_name': 'roberta-base'}
  ```
 
-Summary:
+Summary of CodeT5:
 ```
 [0] Best bleu+em+cbleu changed into 179.92 (bleu: 76.95, em: 23.98, cbleu: 78.99)
 [1] Best bleu+em+cbleu changed into 183.13 (bleu: 77.72, em: 25.77, cbleu: 79.64)
@@ -101,8 +113,6 @@ public  virtual  bool   canEncode   ( )   { return true  ;  }
 We use the following notations and algorithm to provide a more detailed and clear explanation of how our diffusion strategy constructs the data for each step. 
 
 > Since mathematical formulas are difficult to display in anonymous links, we have included screenshots instead.
-
-Let \( O_1 \) represent the initial old code and \( C_1 \) represent the final new code. We first compute \( \text{diff}(O_1, C_1) \), which represents all the changes required to transform the old code \( O_1 \) into the new code \( C_1 \). Specifically, the sequence of changes is determined using the **`unified_diff`** format provided by Python's **`difflib`** library, which generates a line-by-line comparison of two text versions. The **`unified_diff`** format, which is similar to the diff format used by GitHub, groups nearby modified lines into a "hunk". Each diffusion step builds on the previous step by changing an additional hunk.
 
 
 ![diffusion](../images/diffusion_step.png)
