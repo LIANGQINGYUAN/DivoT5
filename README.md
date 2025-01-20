@@ -4,35 +4,6 @@
 - We provide all results of ablation experiments.
 - We provide prompts used for LLM inference.
 
-# Ablation Experiments
-| **Models** | **CodeReview EM** | **BugFix-Small EM** | **BugFix-Medium EM** | **NL-CodeRefinement EM** | **Refine-Small EM** | **Refine-Medium EM** | **Java-CShapr EM** | **CSharp-Java EM** |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| DivoT5-small~(60M) | **40.16** | **35.84** | **28.72** | **29.42** | **22.31** | **14.62** | **68.30** | **72.50** |
-| w/o KSM | 35.45 | 35.28 | 27.36 | 28.69 | 21.75 | 13.67 | 68.00 | 71.20 |
-| w/o RM | 37.02 | 35.30 | 28.10 | 28.61 | 21.54 | 13.91 | 66.30 | 69.80 |
-| w/o EDAE | 35.22 | 35.50 | 27.65 | 28.74 | 20.99 | 13.86 | 67.50 | 68.60 |
-| w/o EDR | 37.31 | 34.76 | 28.37 | 28.72 | 21.68 | 14.03 | 67.70 | 70.20 |
-| w/o Artificial Noise |  36.61|  35.52|  28.40|  28.85|  21.41|  13.80|  67.00|  68.60|
-| w/o ALL | 34.75 | 35.35 | 27.36 | 28.50 | 20.84 | 13.41 | 67.60 | 68.20 |
-
-# Prompts
-All prompts in the `./inference/prompts.ipynb`.
-
-# Detailed Settings
-The length of input and output:
-```
-task_length = { 
-    "RefineSmall": [130,130],
-    "RefineMedium": [250,250],
-    "CodeReview": [512,400],
-    "BFsmall": [512,130],
-    "BFmdeium": [512,400],
-    "trans": [512,512],
-    'CodeRefinement': [512, 400],
-}
-```
-Then, we set the batch size to fully utilize 24GB of GPU memory within the given length constraints, whose details are at `./finetuning/GoGoGo.py`.
-
 # DivoT5
 We propose a directional diffusion technique at the data level of code evolution and apply it within an Encoder-Decoder framework.
 
@@ -236,3 +207,23 @@ public boolean isExpired ( Date invocationDate ) { if ( getExpires ( ) != null )
 // DivoT5:          
 public boolean isExpired ( Date invocationDate ) { if ( getExpires ( ) != null ) { return getExpires ( ) . before ( invocationDate == null ? new Date ( ) : invocationDate ) ; } return false ; }
 ```
+
+
+# Prompts
+All prompts in the `./inference/prompts.ipynb`.
+
+# Detailed Settings
+The length of input and output:
+```
+task_length = { 
+    "RefineSmall": [130,130],
+    "RefineMedium": [250,250],
+    "CodeReview": [512,400],
+    "BFsmall": [512,130],
+    "BFmdeium": [512,400],
+    "trans": [512,512],
+    'CodeRefinement': [512, 400],
+}
+```
+Then, we set the batch size to fully utilize 24GB of GPU memory within the given length constraints, whose details are at `./finetuning/GoGoGo.py`.
+
