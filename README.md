@@ -1,31 +1,31 @@
 # 📢 News
 
+- We upload our model weights to the huggingface.
 - We open-source all data processing and training code for DivoT5.
 - We provide all results of ablation experiments.
-- We provide prompts used for LLM inference.
 
 # DivoT5
 We propose a directional diffusion technique at the data level of code evolution and apply it within an Encoder-Decoder framework.
 
 The directional diffusion can be mainly divided into the following two steps:
 - Noising process at the data level.
-    - Seting the starting point to old code.
+    - Setting the starting point to old code.
     - Adding artificial noise to perturb the old data.
     - Exploring the intermediate step in the real evolution process.
 - Denoising process within the Encoder-Decoder framework.
     - Using the auto-regressive nature of the Encoder-Decoder framework.
-    - Perceiving the specific evolutionary direction in generation.
+    - Perceiving the specific evolutionary direction in a generation.
 
 ## Overview & Example
 ![overview](./images/overview.png)
 > Figure 1: The directional diffusion process iteratively denoises and evolves the old code into new code.
 
-This Figure 1 illustrates the schematic of directional diffusion, we set the starting point(i.e., $X_T$ in Figure 1) of the directional diffusion strategy as the old code.
+Figure 1 illustrates the schematic of directional diffusion, we set the starting point(i.e., $X_T$ in Figure 1) of the directional diffusion strategy as the old code.
 We utilize intermediate data(i.e., $X_t$ in Figure 1) from the incremental evolution process to train the DivoT5 model, providing a clear directional and more detailed guidance information to reinforce the evolutionary direction.
 In Figure 1, $X_{T+1}$ to $X_{T}$ represents the process of removing artificial noise(denoising), and $X_t$ to $X_{t-1}$ represents a step in code evolution. 
 
 ![example](./images/example.png)
-> Figure 2: An denoising example used in the DivoT5’s training process.
+> Figure 2: A denoising example used in DivoT5’s training process.
 
 As shown in the code evolution example in Figure 2, 
 modifying the old code to meet this requirement may involve changes in multiple locations, which could be far apart. Completing this evolution requires incremental modifications to all relevant locations.
@@ -44,7 +44,7 @@ You can download the datasets and models with fine-tuned weights from [this link
 
 ### An example of inference on the CodeReview dataset
 
-Loading the model weigths.
+Loading the model weights.
 
 ```python
 import torch
@@ -85,9 +85,20 @@ tokenizer.decode(decode_ids[0], skip_special_tokens=True, clean_up_tokenization_
 You can find the original code file in `./fine-tuning/inference.ipynb`.
 
 ### Pre-trained Models
+You can load the model weights from the huggingface:
 
-We will release DivoT5 after our paper is accepted.
 
+- DivoT5-220M: https://huggingface.co/qyliang/DivoT5-220M
+
+- DivoT5-60M: https://huggingface.co/qyliang/DivoT5-60M
+
+
+Example:
+```python
+from transformers import RobertaTokenizer, T5Config, T5ForConditionalGeneration
+tokenizer = RobertaTokenizer.from_pretrained('DivoT5-60M')
+model = T5ForConditionalGeneration.from_pretrained('DivoT5-220M')
+```
 
 
 ## More generation examples in CodeReview dataset
